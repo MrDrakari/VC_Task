@@ -22,19 +22,15 @@ int main()
 				input = _getch();
 				if (input == 72) {
 					buffer[index] = 'U';
-					printf("위");
 				}
 				else if (input == 80) {
 					buffer[index] = 'D';
-					printf("아래");
 				}
 				else if (input == 77) {
 					buffer[index] = 'R';
-					printf("오른쪽");
 				}
 				else if (input == 75) {
 					buffer[index] = 'L';
-					printf("왼쪽");
 				}
 				index++;
 			}
