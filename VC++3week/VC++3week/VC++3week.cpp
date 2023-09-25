@@ -4,7 +4,7 @@
 
 int main()
 {
-	char buffer[30];
+	char buffer[100];
 	int index = 0;
 	char code;
 	char input;
@@ -36,7 +36,6 @@ int main()
 			}
 			else if (code >= 32 && code <= 126) {
 				buffer[index] = code;
-				printf("%c", code);
 				index++;
 				code = 0;
 			}
@@ -55,6 +54,7 @@ int main()
 				if (buffer[0] == 'D' && buffer[1] == 'R' && buffer[2] == 'a') {
 					printf("아도겐! =o\n");
 					index = 0;
+					buffer[2] = 'x';
 				}
 				else if (buffer[0] == 'U' && buffer[1] == 'U' && buffer[2] == 'D' && buffer[3] == 'D' && buffer[4] == 'z') {
 					printf("견제기\n");
@@ -69,12 +69,15 @@ int main()
 					index = 0;
 				}
 
-				buffer[2] = 'x';
+				clock_t st = clock();
+				st_d = st / 1000;
+
+				buffer[4] = 'x';
 			}
 		}
 		else {
 			clock_t st = clock();
-			st_d = st / 1000;
+			st_d =  st / 1000;
 		}
 		
 	}
