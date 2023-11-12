@@ -1,6 +1,5 @@
 ﻿#include <Windows.h>
 
-
 // 도형 변수
 bool BoxMoving = false;
 bool cubeMoving = false;
@@ -35,25 +34,23 @@ int isMouseRButtonPressed = 0;
 
 
 void Draw(HWND hWnd, HDC hdc) {
-    RECT rect;
     HBRUSH RBrush = CreateSolidBrush(RGB(0, 0, 0));
-    GetClientRect(hWnd, &rect);
     if (Mainbox) {
         HBRUSH hBrush = CreateSolidBrush(RGB(255, 240, 200));
         SelectObject(hdc, hBrush);
-        Rectangle(hdc, 8, 8, 800 - 24, 480 - 46);
+        Rectangle(hdc, 8, 8, 776, 434);
         DeleteObject(hBrush);
     }
 
     if (drawbox) {
         HBRUSH hBrush = CreateSolidBrush(RGB(255, 255, 255));
         SelectObject(hdc, hBrush);
-        Rectangle(hdc, 16, 87, 800 - 32, 480 - 54);
+        Rectangle(hdc, 16, 104, 768, 426);
         DeleteObject(hBrush);
     }
 
-    if (drow != 0 && startPoint.x > 16 && startPoint.y > 87 && startPoint.x < 768 && startPoint.y < 426) {
-        if (endPoint.x > 16 && endPoint.y > 87 && endPoint.x < 768 && endPoint.y < 426) {
+    if (drow != 0 && startPoint.x > 16 && startPoint.y > 104 && startPoint.x < 768 && startPoint.y < 426) {
+        if (endPoint.x > 16 && endPoint.y > 104 && endPoint.x < 768 && endPoint.y < 426) {
             switch (drow) {
             case 1:
             {
@@ -124,7 +121,7 @@ void Draw(HWND hWnd, HDC hdc) {
                     radice = newendPoint.x - newstartPoint.x;
                 }
 
-                Ellipse(hdc, left + radice/2, top + radice/2, right - radice / 2, bottom - radice/2);
+                Ellipse(hdc, left + radice / 2, top + radice / 2, right - radice / 2, bottom - radice / 2);
                 DeleteObject(hBrush);
                 break;
             }
@@ -132,85 +129,25 @@ void Draw(HWND hWnd, HDC hdc) {
             case 3:
             {
 
-                HBRUSH SBrush = CreateSolidBrush(RGB(127, 200, 255));
-                SelectObject(hdc, SBrush);
-                Ellipse(hdc, 400 - 100, 256 - 100, 400 + 100, 256 + 100); //피부
-                DeleteObject(SBrush);
 
-                HBRUSH MBrush = CreateSolidBrush(RGB(255, 150, 255));
-                SelectObject(hdc, MBrush);
-                Ellipse(hdc, 400 - 15, 297 - 27, 400 + 15, 297 + 27); //입
-                DeleteObject(MBrush);
-
-
-                HBRUSH RBrush = CreateSolidBrush(RGB(255, 255, 255));
-                SelectObject(hdc, RBrush);
-                Ellipse(hdc, 378 - 21, 272 - 18, 378 + 21, 272 + 18); //입술
-                Ellipse(hdc, 422 - 21, 272 - 18, 422 + 21, 272 + 18); //입술
-                DeleteObject(RBrush);
-
-                HBRUSH BBrush = CreateSolidBrush(RGB(0, 0, 0));
-                SelectObject(hdc, BBrush);
-
-                Ellipse(hdc, 400 - 15, 256 - 15, 400 + 15, 256 + 15); //코
-
-                MoveToEx(hdc, 372, 266, NULL); //왼 수염
-                LineTo(hdc, 351, 260);
-                MoveToEx(hdc, 372, 276, NULL);
-                LineTo(hdc, 351, 282);
-
-                MoveToEx(hdc, 428, 266, NULL); //오른 수염 
-                LineTo(hdc, 449, 260);
-                MoveToEx(hdc, 428, 272, NULL);
-                LineTo(hdc, 449, 282);
-                DeleteObject(BBrush);
-
-                if (Blink == 0) {
-                    HBRUSH BBrush = CreateSolidBrush(RGB(0, 0, 0));
-                    SelectObject(hdc, BBrush); //눈
-                    Ellipse(hdc, 320 - 5, 226 - 10, 320 + 5, 226 + 10);
-                    Ellipse(hdc, 480 - 5, 226 - 10, 480 + 5, 226 + 10);
-                    DeleteObject(BBrush);
-
-                    HBRUSH RBrush = CreateSolidBrush(RGB(255, 255, 255)); //동공
-                    SelectObject(hdc, RBrush);
-                    Ellipse(hdc, 320 - 2, 226 - 4, 320 + 2, 226 + 4);
-                    Ellipse(hdc, 480 - 2, 226 - 4, 480 + 2, 226 + 4);
-                    DeleteObject(RBrush);
-                }
-                else {
-                    HBRUSH BBrush = CreateSolidBrush(RGB(0, 0, 0));
-                    SelectObject(hdc, BBrush);
-                    MoveToEx(hdc, 335, 226, NULL);
-                    LineTo(hdc, 315, 216);
-                    MoveToEx(hdc, 335, 226, NULL);
-                    LineTo(hdc, 315, 236);
-
-                    MoveToEx(hdc, 465, 226, NULL);
-                    LineTo(hdc, 485, 216);
-                    MoveToEx(hdc, 465, 226, NULL);
-                    LineTo(hdc, 485, 236);
-                    DeleteObject(BBrush);
-                }
 
                 break;
             }
             case 4:
             {
+                left = min(startPoint.x, endPoint.x);
+                top = min(startPoint.y, endPoint.y);
+                right = max(startPoint.x, endPoint.x);
+                bottom = max(startPoint.y, endPoint.y);
+
+                if (endPoint.y - startPoint.y >= 0) {
                     HBRUSH hBrush = CreateSolidBrush(RGB(255, 200, 15));
                     SelectObject(hdc, hBrush);
-
-                    left = min(startPoint.x, endPoint.x);
-                    top = min(startPoint.y, endPoint.y);
-                    right = max(startPoint.x, endPoint.x);
-                    bottom = max(startPoint.y, endPoint.y);
-
                     Ellipse(hdc, (left + (right - left) / 3) - 2 * (right - left) / 5, (top + (bottom - top) / 3) - (bottom - top) / 3, (right - (right - left) / 3) - 2 * (right - left) / 5, (bottom - (bottom - top) / 3) - (bottom - top) / 3); //왼쪽 귀
                     Ellipse(hdc, (left + (right - left) / 3) + 2 * (right - left) / 5, (top + (bottom - top) / 3) - (bottom - top) / 3, (right - (right - left) / 3) + 2 * (right - left) / 5, (bottom - (bottom - top) / 3) - (bottom - top) / 3); //오른쪽 귀
 
                     Ellipse(hdc, left, top, right, bottom); //얼굴
                     DeleteObject(hBrush);
-
 
                     HBRUSH WBrush = CreateSolidBrush(RGB(255, 255, 255));
                     SelectObject(hdc, WBrush);
@@ -224,11 +161,11 @@ void Draw(HWND hWnd, HDC hdc) {
                     Ellipse(hdc, (left + (right - left) * 23 / 50) + (right - left) / 4, (top + (bottom - top) * 23 / 50) - (bottom - top) / 8, (right - (right - left) * 23 / 50) + (right - left) / 4, (bottom - (bottom - top) * 23 / 50) - (bottom - top) / 8); //오른쪽 눈
 
                     MoveToEx(hdc, left + (right - left) / 6, top + (bottom - top) * 25 / 100, NULL); //왼쪽 눈썹
-                    LineTo(hdc, left + (right - left) * 2/ 6, top + (bottom - top) * 25 / 100);
+                    LineTo(hdc, left + (right - left) * 2 / 6, top + (bottom - top) * 25 / 100);
                     MoveToEx(hdc, left + (right - left) / 6, top + (bottom - top) * 26 / 100, NULL);
                     LineTo(hdc, left + (right - left) * 2 / 6, top + (bottom - top) * 26 / 100);
                     MoveToEx(hdc, left + (right - left) / 6, top + (bottom - top) * 24 / 100, NULL);
-                    LineTo(hdc, left + (right - left) * 2/ 6, top + (bottom - top) * 24 / 100);
+                    LineTo(hdc, left + (right - left) * 2 / 6, top + (bottom - top) * 24 / 100);
 
                     MoveToEx(hdc, right - (right - left) / 6, top + (bottom - top) * 25 / 100, NULL); //오른쪽 눈썹
                     LineTo(hdc, right - (right - left) * 2 / 6, top + (bottom - top) * 25 / 100);
@@ -237,7 +174,43 @@ void Draw(HWND hWnd, HDC hdc) {
                     MoveToEx(hdc, right - (right - left) / 6, top + (bottom - top) * 24 / 100, NULL);
                     LineTo(hdc, right - (right - left) * 2 / 6, top + (bottom - top) * 24 / 100);
                     DeleteObject(BBrush);
-                    
+                }
+                else {
+                    HBRUSH hBrush = CreateSolidBrush(RGB(255, 200, 15));
+                    SelectObject(hdc, hBrush);
+                    Ellipse(hdc, (left + (right - left) / 3) - 2 * (right - left) / 5, (top + (bottom - top) / 3) + (bottom - top) / 3, (right - (right - left) / 3) - 2 * (right - left) / 5, (bottom - (bottom - top) / 3) + (bottom - top) / 3); //왼쪽 귀
+                    Ellipse(hdc, (left + (right - left) / 3) + 2 * (right - left) / 5, (top + (bottom - top) / 3) + (bottom - top) / 3, (right - (right - left) / 3) + 2 * (right - left) / 5, (bottom - (bottom - top) / 3) + (bottom - top) / 3); //오른쪽 귀
+
+                    Ellipse(hdc, left, top, right, bottom); //얼굴
+                    DeleteObject(hBrush);
+
+                    HBRUSH WBrush = CreateSolidBrush(RGB(255, 255, 255));
+                    SelectObject(hdc, WBrush);
+                    Ellipse(hdc, (left + (right - left) * 3 / 7) - (right - left) / 14, (top + (bottom - top) * 3 / 7) - (bottom - top) / 13, (right - (right - left) * 3 / 7) - (right - left) / 14, (bottom - (bottom - top) * 3 / 7) - (bottom - top) / 13); //왼쪽 코
+                    Ellipse(hdc, (left + (right - left) * 3 / 7) + (right - left) / 14, (top + (bottom - top) * 3 / 7) - (bottom - top) / 13, (right - (right - left) * 3 / 7) + (right - left) / 14, (bottom - (bottom - top) * 3 / 7) - (bottom - top) / 13); //오른쪽 코
+                    DeleteObject(WBrush);
+
+                    HBRUSH BBrush = CreateSolidBrush(RGB(0, 0, 0));
+                    SelectObject(hdc, BBrush);
+                    Ellipse(hdc, (left + (right - left) * 23 / 50) - (right - left) / 4, (top + (bottom - top) * 23 / 50) + (bottom - top) / 8, (right - (right - left) * 23 / 50) - (right - left) / 4, (bottom - (bottom - top) * 23 / 50) + (bottom - top) / 8); //왼쪽 눈
+                    Ellipse(hdc, (left + (right - left) * 23 / 50) + (right - left) / 4, (top + (bottom - top) * 23 / 50) + (bottom - top) / 8, (right - (right - left) * 23 / 50) + (right - left) / 4, (bottom - (bottom - top) * 23 / 50) + (bottom - top) / 8); //오른쪽 눈
+
+                    MoveToEx(hdc, left + (right - left) / 6, bottom - (bottom - top) * 25 / 100, NULL); //왼쪽 눈썹
+                    LineTo(hdc, left + (right - left) * 2 / 6, bottom - (bottom - top) * 25 / 100);
+                    MoveToEx(hdc, left + (right - left) / 6, bottom - (bottom - top) * 26 / 100, NULL);
+                    LineTo(hdc, left + (right - left) * 2 / 6, bottom - (bottom - top) * 26 / 100);
+                    MoveToEx(hdc, left + (right - left) / 6, bottom - (bottom - top) * 24 / 100, NULL);
+                    LineTo(hdc, left + (right - left) * 2 / 6, bottom - (bottom - top) * 24 / 100);
+
+                    MoveToEx(hdc, right - (right - left) / 6, bottom - (bottom - top) * 25 / 100, NULL); //오른쪽 눈썹
+                    LineTo(hdc, right - (right - left) * 2 / 6, bottom - (bottom - top) * 25 / 100);
+                    MoveToEx(hdc, right - (right - left) / 6, bottom - (bottom - top) * 26 / 100, NULL);
+                    LineTo(hdc, right - (right - left) * 2 / 6, bottom - (bottom - top) * 26 / 100);
+                    MoveToEx(hdc, right - (right - left) / 6, bottom - (bottom - top) * 24 / 100, NULL);
+                    LineTo(hdc, right - (right - left) * 2 / 6, bottom - (bottom - top) * 24 / 100);
+                    DeleteObject(BBrush);
+                }
+
                 break;
             }
             case 5:
@@ -488,6 +461,69 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) 
         HDC hdc = BeginPaint(hwnd, &ps);
         Draw(hwnd, hdc);
 
+        if (drow == 3) {
+            HBRUSH SBrush = CreateSolidBrush(RGB(127, 200, 255));
+            SelectObject(hdc, SBrush);
+            Ellipse(hdc, 400 - 100, 256 - 100, 400 + 100, 256 + 100); //피부
+            DeleteObject(SBrush);
+
+            HBRUSH MBrush = CreateSolidBrush(RGB(255, 150, 255));
+            SelectObject(hdc, MBrush);
+            Ellipse(hdc, 400 - 15, 297 - 27, 400 + 15, 297 + 27); //입
+            DeleteObject(MBrush);
+
+
+            HBRUSH RBrush = CreateSolidBrush(RGB(255, 255, 255));
+            SelectObject(hdc, RBrush);
+            Ellipse(hdc, 378 - 21, 272 - 18, 378 + 21, 272 + 18); //입술
+            Ellipse(hdc, 422 - 21, 272 - 18, 422 + 21, 272 + 18); //입술
+            DeleteObject(RBrush);
+
+            HBRUSH BBrush = CreateSolidBrush(RGB(0, 0, 0));
+            SelectObject(hdc, BBrush);
+
+            Ellipse(hdc, 400 - 15, 256 - 15, 400 + 15, 256 + 15); //코
+
+            MoveToEx(hdc, 372, 266, NULL); //왼 수염
+            LineTo(hdc, 351, 260);
+            MoveToEx(hdc, 372, 276, NULL);
+            LineTo(hdc, 351, 282);
+
+            MoveToEx(hdc, 428, 266, NULL); //오른 수염 
+            LineTo(hdc, 449, 260);
+            MoveToEx(hdc, 428, 272, NULL);
+            LineTo(hdc, 449, 282);
+            DeleteObject(BBrush);
+
+            if (Blink == 0) {
+                HBRUSH BBrush = CreateSolidBrush(RGB(0, 0, 0));
+                SelectObject(hdc, BBrush); //눈
+                Ellipse(hdc, 320 - 5, 226 - 10, 320 + 5, 226 + 10);
+                Ellipse(hdc, 480 - 5, 226 - 10, 480 + 5, 226 + 10);
+                DeleteObject(BBrush);
+
+                HBRUSH RBrush = CreateSolidBrush(RGB(255, 255, 255)); //동공
+                SelectObject(hdc, RBrush);
+                Ellipse(hdc, 320 - 2, 226 - 4, 320 + 2, 226 + 4);
+                Ellipse(hdc, 480 - 2, 226 - 4, 480 + 2, 226 + 4);
+                DeleteObject(RBrush);
+            }
+            else {
+                HBRUSH BBrush = CreateSolidBrush(RGB(0, 0, 0));
+                SelectObject(hdc, BBrush);
+                MoveToEx(hdc, 335, 226, NULL);
+                LineTo(hdc, 315, 216);
+                MoveToEx(hdc, 335, 226, NULL);
+                LineTo(hdc, 315, 236);
+
+                MoveToEx(hdc, 465, 226, NULL);
+                LineTo(hdc, 485, 216);
+                MoveToEx(hdc, 465, 226, NULL);
+                LineTo(hdc, 485, 236);
+                DeleteObject(BBrush);
+            }
+        }
+
         EndPaint(hwnd, &ps);
         break;
     }
@@ -557,23 +593,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     hButton1 = CreateWindow(
         L"BUTTON", L"Box", WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-        24, 15, 135, 64, hWnd, (HMENU)1, hInstance, NULL);
+        24, 24, 135, 64, hWnd, (HMENU)1, hInstance, NULL);
 
     hButton2 = CreateWindow(
         L"BUTTON", L"Circle", WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-        175, 15, 135, 64, hWnd, (HMENU)2, hInstance, NULL);
+        175, 24, 134, 64, hWnd, (HMENU)2, hInstance, NULL);
 
     hButton3 = CreateWindow(
         L"BUTTON", L"Bonobono", WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-        326, 15, 135, 64, hWnd, (HMENU)3, hInstance, NULL);
+        325, 24, 134, 64, hWnd, (HMENU)3, hInstance, NULL);
 
     hButton4 = CreateWindow(
         L"BUTTON", L"Ryan", WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-        477, 15, 135, 64, hWnd, (HMENU)4, hInstance, NULL);
+        475, 24, 134, 64, hWnd, (HMENU)4, hInstance, NULL);
 
     hButton5 = CreateWindow(
         L"BUTTON", L"Cube", WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-        628, 15, 135, 64, hWnd, (HMENU)5, hInstance, NULL);
+        625, 24, 135, 64, hWnd, (HMENU)5, hInstance, NULL);
 
     MSG msg;
     while (GetMessage(&msg, nullptr, 0, 0)) {
